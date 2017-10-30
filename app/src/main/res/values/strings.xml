@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ModernAndroid</string>
+    <string name="error_fetch_data_api">fetch data error</string>
 </resources>

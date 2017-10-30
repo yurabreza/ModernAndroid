@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 android {
@@ -12,6 +13,7 @@ android {
         versionCode androidVersionCode
         versionName andoridVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_URL", '"https://jsonplaceholder.typicode.com"'
     }
     buildTypes {
         release {
@@ -23,6 +25,7 @@ android {
         enabled = true
     }
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -42,9 +45,9 @@ dependencies {
     //network
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rxJavaAdapter}"
 
     //lifecycle
     implementation "android.arch.lifecycle:runtime:${lifecycleRuntime}"
@@ -52,7 +55,7 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:${lifecycleExtensions}"
 
     //rxJava
-    compile "io.reactivex:rxandroid:$rxAndroidVersion"
-    compile "io.reactivex:rxjava:$rxJavaVersion"
+    compile "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    compile "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
 
 }

@@ -18,9 +18,10 @@ buildscript {
 
     ext.okhttpVersion = '3.9.0'
     ext.retrofitVersion = '2.3.0'
+    ext.rxJavaAdapter = '1.0.0'
 
-    ext.rxJavaVersion = '1.1.4'
-    ext.rxAndroidVersion = '1.2.1'
+    ext.rxJavaVersion = '2.0.3'
+    ext.rxAndroidVersion = '2.0.1'
 
     ext.daggerVersion = '2.11'
     ext.realmVersion = '3.7.2'
