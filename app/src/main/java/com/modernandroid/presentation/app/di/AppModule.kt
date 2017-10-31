@@ -6,5 +6,5 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module class AppModule(private val mMainApp: App) {
-    @Provides @Singleton internal fun provideMainApp(): App = mMainApp
+    @Provides @Singleton  fun provideMainApp(): App = mMainApp
 }

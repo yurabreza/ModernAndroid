@@ -6,13 +6,12 @@ import android.widget.Toast
 import com.modernandroid.R
 import com.modernandroid.data.model.Post
 import com.modernandroid.databinding.ActivityMainBinding
-import com.modernandroid.presentation.Navigator
-import com.modernandroid.presentation.dataRepository.PostsRepository
+import com.modernandroid.presentation.screens.Navigator
 import com.modernandroid.presentation.screens.main.adapter.PostsAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MainViewModel(private val activityMainBinding: ActivityMainBinding, repositoryImpl: PostsRepository,
+class MainViewModel(private val activityMainBinding: ActivityMainBinding, mainPresenter: MainPresenter,
                     navigator: Navigator) : HasProgress {
 
     override val progressBar: ProgressBar = activityMainBinding.progressBar
@@ -23,7 +22,7 @@ class MainViewModel(private val activityMainBinding: ActivityMainBinding, reposi
     init {
         activityMainBinding.recyclerView.layoutManager = LinearLayoutManager(activityMainBinding.recyclerView.context)
         activityMainBinding.recyclerView.adapter = adapter
-        repositoryImpl.posts()
+        mainPresenter.getPostsList()
                 .doOnSubscribe({ showProgress() })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
