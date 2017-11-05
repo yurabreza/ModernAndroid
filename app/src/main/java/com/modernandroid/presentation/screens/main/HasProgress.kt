@@ -4,13 +4,13 @@ import android.view.View
 import android.widget.ProgressBar
 
 interface HasProgress {
-    val progressBar: ProgressBar
+    fun getProgressBar():ProgressBar?
 
     fun showProgress() {
-        progressBar.visibility = View.VISIBLE
+        getProgressBar()?.visibility = View.VISIBLE
     }
 
     fun hideProgress() {
-        progressBar.visibility = View.GONE
+        getProgressBar()?.visibility = View.GONE
     }
 }

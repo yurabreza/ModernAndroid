@@ -15,8 +15,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/lightGray"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/lightGray">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -31,7 +31,7 @@
             style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{model.progressVisible.get() ? View.VISIBLE : View.GONE}"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="154dp"
             tools:layout_editor_absoluteY="217dp"/>

@@ -34,8 +34,7 @@ import javax.inject.Singleton
                 .build()
     }
 
-    @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService {
+    @Provides fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create<ApiService>(ApiService::class.java)
     }
 }

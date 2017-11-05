@@ -1,21 +1,21 @@
 package com.modernandroid.presentation.app.di
 
 import com.modernandroid.presentation.app.App
-import com.modernandroid.presentation.screens.main.di.MainActivityComponent
+import com.modernandroid.presentation.screens.main.di.MainViewModelComponent
 
 class DependencyGraph(mainApp: App) {
     private val mAppComponent: AppComponent = DaggerAppComponent.builder()
             .appModule(AppModule(mainApp))
             .build()
 
-    private var mainActivityComponent: MainActivityComponent? = null
+    private var mainActivityComponent: MainViewModelComponent? = null
 
-    fun initMainActivityComponent(): MainActivityComponent? {
-        mainActivityComponent = mAppComponent.plusMainActivityComponent()
+    fun initMainViewModelComponent(): MainViewModelComponent? {
+        mainActivityComponent = mAppComponent.plusMainViewModelComponent()
         return mainActivityComponent
     }
 
-    fun releaseMainActivityComponent() {
+    fun releaseMainViewModelComponent() {
         mainActivityComponent = null
     }
 }

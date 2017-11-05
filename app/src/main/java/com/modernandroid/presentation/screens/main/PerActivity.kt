@@ -1,7 +1,5 @@
 package com.modernandroid.presentation.screens.main
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import javax.inject.Scope
 
-@Scope @Retention(RetentionPolicy.RUNTIME) annotation class PerActivity
+@Scope @Retention(AnnotationRetention.RUNTIME) annotation class PerActivity

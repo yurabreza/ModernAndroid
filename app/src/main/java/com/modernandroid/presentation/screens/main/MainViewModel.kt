@@ -1,44 +1,59 @@
 package com.modernandroid.presentation.screens.main
 
-import android.support.v7.widget.LinearLayoutManager
-import android.widget.ProgressBar
-import android.widget.Toast
-import com.modernandroid.R
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
+import android.util.Log
 import com.modernandroid.data.model.Post
-import com.modernandroid.databinding.ActivityMainBinding
-import com.modernandroid.presentation.screens.Navigator
-import com.modernandroid.presentation.screens.main.adapter.PostsAdapter
+import com.modernandroid.presentation.app.App
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainViewModel(private val activityMainBinding: ActivityMainBinding, mainPresenter: MainPresenter,
-                    navigator: Navigator) : HasProgress {
+class MainViewModel : ViewModel() {
 
-    override val progressBar: ProgressBar = activityMainBinding.progressBar
-    private val posts: ArrayList<Post> = ArrayList()
-    private val listener = { post: Post -> navigator.displayPostDetails(post.id!!) }
-    private val adapter: PostsAdapter = PostsAdapter(posts, listener)
+    private val disposable: CompositeDisposable = CompositeDisposable()
+    @Inject lateinit var dataSource: DataSource
+    val progressVisible = ObservableBoolean(false)
+    var posts = MutableLiveData<ArrayList<Post>>()
+    var error = ObservableField<String>()
 
     init {
-        activityMainBinding.recyclerView.layoutManager = LinearLayoutManager(activityMainBinding.recyclerView.context)
-        activityMainBinding.recyclerView.adapter = adapter
-        mainPresenter.getPostsList()
-                .doOnSubscribe({ showProgress() })
+        App.dependencyGraph?.initMainViewModelComponent()?.inject(this)
+        dataSource.onAttach(this)
+
+        disposable.add(dataSource.getPostsList()
+                .doOnSubscribe({ progressVisible.set(true) })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError({ hideProgress() })
-                .doOnSuccess({ hideProgress() })
-                .subscribe(this::displayData, this::onError)
+                .doOnError({ progressVisible.set(false) })
+                .doOnSuccess({ progressVisible.set(false) })
+                .subscribe(this::updatePosts, this::onError))
+        Log.d(TAG, "init")
     }
 
-    private fun displayData(posts: List<Post>) {
-        this.posts.addAll(posts)
-        adapter.notifyDataSetChanged()
+
+    private fun updatePosts(posts: List<Post>) {
+        Log.d(TAG,"${posts.size} posts loaded")
+        this.posts.value = ArrayList(posts)
     }
 
     private fun onError(throwable: Throwable) {
         throwable.printStackTrace()
-        val context = activityMainBinding.progressBar.context
-        Toast.makeText(context, context.getString(R.string.error_fetch_data_api), Toast.LENGTH_SHORT).show()
+        error.set("No internet connection")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+        App.dependencyGraph?.releaseMainViewModelComponent()
+        dataSource.onDetach()
+        Log.d(TAG, "onCleared")
+    }
+
+    companion object {
+        val TAG = "MainViewModelTag"
     }
 }
