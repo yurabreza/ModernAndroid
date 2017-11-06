@@ -4,7 +4,6 @@ import com.modernandroid.presentation.screens.main.MainViewModel
 import com.modernandroid.presentation.screens.main.PerActivity
 import dagger.Subcomponent
 
-@Subcomponent(modules = arrayOf(MainViewModelComponent::class))
-@PerActivity interface MainViewModelComponent {
+@Subcomponent(modules = arrayOf(MainViewModelModule::class)) @PerActivity interface MainViewModelComponent {
     fun inject(viewModel: MainViewModel)
 }

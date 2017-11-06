@@ -7,9 +7,6 @@
             name="post"
             type="com.modernandroid.presentation.screens.main.adapter.PostViewModel"/>
     </data>
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
             android:id="@+id/cv_root"
             android:layout_width="match_parent"
@@ -19,11 +16,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:elevation="8dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:cardUseCompatPadding="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,5 +37,4 @@
                     tools:text="body"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-    </android.support.constraint.ConstraintLayout>
 </layout>

@@ -3,7 +3,6 @@ package com.modernandroid.presentation.screens.main
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.databinding.Observable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity(), Navigator {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.model = ViewModelProviders.of(this).get(MainViewModel::class.java)
-//        binding.executePendingBindings()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = this.adapter
@@ -36,10 +34,8 @@ class MainActivity : AppCompatActivity(), Navigator {
             adapter.notifyDataSetChanged()
         })
 
-        binding.model?.error?.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(p0: Observable?, p1: Int) {
-                Toast.makeText(applicationContext, "Error : ${binding.model?.error?.get()}", Toast.LENGTH_SHORT).show()
-            }
+        binding.model?.error?.observe(this, Observer<String> {
+            it?.let { Toast.makeText(applicationContext, "Error : ${binding.model?.error?.value}", Toast.LENGTH_SHORT).show() }
         })
     }
 

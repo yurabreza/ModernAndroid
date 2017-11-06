@@ -9,12 +9,11 @@ import com.modernandroid.data.model.Post
 import com.modernandroid.databinding.ItemPostBinding
 import com.modernandroid.presentation.mapper.PostToPostViewModelMapper
 
-class PostsAdapter(private val posts: ArrayList<Post>, private val listener: (Post) -> Unit) : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
+class PostsAdapter(private val posts: ArrayList<Post>,
+                   private val listener: (Post) -> Unit) : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PostsViewHolder {
-        val inflater = LayoutInflater.from(parent?.context)
-        return PostsViewHolder(DataBindingUtil.inflate(inflater, R.layout.item_post, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PostsViewHolder =
+            PostsViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent?.context), R.layout.item_post, parent, false))
 
     override fun getItemCount(): Int = posts.size
 
@@ -23,10 +22,9 @@ class PostsAdapter(private val posts: ArrayList<Post>, private val listener: (Po
     class PostsViewHolder(private val itemPostBinding: ItemPostBinding) : RecyclerView.ViewHolder(itemPostBinding.root) {
 
         fun bind(post: Post, listener: (Post) -> Unit) {
-            val postViewModel = PostToPostViewModelMapper().apply(post)
-            itemPostBinding.post = postViewModel
-            itemPostBinding.executePendingBindings()
+            itemPostBinding.post = PostToPostViewModelMapper().apply(post)
             itemPostBinding.root.setOnClickListener({ listener.invoke(post) })
         }
     }
 }
+

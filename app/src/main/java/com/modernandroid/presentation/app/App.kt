@@ -1,9 +1,7 @@
 package com.modernandroid.presentation.app
 
 import android.app.Application
-
 import com.modernandroid.presentation.app.di.DependencyGraph
-
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -26,3 +24,5 @@ class App : Application() {
             private set
     }
 }
+
+
