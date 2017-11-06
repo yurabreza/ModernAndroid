@@ -6,11 +6,7 @@ import android.widget.ProgressBar
 interface HasProgress {
     fun getProgressBar():ProgressBar?
 
-    fun showProgress() {
-        getProgressBar()?.visibility = View.VISIBLE
-    }
+    fun showProgress() { getProgressBar()?.visibility = View.VISIBLE }
 
-    fun hideProgress() {
-        getProgressBar()?.visibility = View.GONE
-    }
+    fun hideProgress() { getProgressBar()?.visibility = View.GONE }
 }
